@@ -1,0 +1,6 @@
+[
+    {"input":"explain advantages of telnet","output":"One advantage of telnet is it is best for remote access to server"},
+    {"input": "give one advantage of telnet", "output": "It allows controlling servers remotely"},
+    {"input": "Give on advantage of telnet", "output": "Major advantage are remote access to computer via IP"}
+
+]

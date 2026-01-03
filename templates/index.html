@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Chat</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .chat {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 80%;
+      padding: 8px;
+    }
+    button {
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h3 style="text-align:center;">LLM AI Chat</h3>
+
+  <div class="chat" id="chat">
+    
+
+  </div>
+
+  <input id="msg" placeholder="Ask anything" />
+  <button id="clickhere" onclick="send()">Send</button>
+</div>
+
+<script>
+  document.getElementById("chat").innerHTML="<h3 style='display:flex;justify-content:center;align-items:center;'>Ask anything </h3>"
+  const socket = new WebSocket("ws://localhost:8887/ws");
+
+socket.onmessage = function(event) {
+  document.getElementById("loadingmsg").remove()
+  document.getElementById("msg").removeAttribute("disabled")
+  document.getElementById("clickhere").removeAttribute("disabled")  
+  const chat = document.getElementById("chat");
+  chat.innerHTML += `<b>AI:</b> ${event.data}<br>`;
+};
+
+function send() {
+  document.getElementById("msg").disabled="true"
+  document.getElementById("clickhere").disabled="true"
+  const msgInput = document.getElementById("msg");
+  const msg = msgInput.value;
+  if (!msg) return;
+
+  const chat = document.getElementById("chat");
+  chat.innerHTML += `<b>You:</b> ${msg}<br><span><img id="loadingmsg" src="https://clenicode.ae/assets/img/typing.gif" style="height:20px;width:40px;" />`;
+
+  socket.send(msg);
+
+  msgInput.value = "";
+}
+</script>
+
+</body>
+</html>
