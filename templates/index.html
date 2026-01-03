@@ -49,7 +49,7 @@
 
 <script>
   document.getElementById("chat").innerHTML="<h3 style='display:flex;justify-content:center;align-items:center;'>Ask anything </h3>"
-  const socket = new WebSocket("ws://localhost:8887/ws");
+  const socket = new WebSocket(`ws://${window.location.host}/ws`);
 
 socket.onmessage = function(event) {
   document.getElementById("loadingmsg").remove()
@@ -77,3 +77,4 @@ function send() {
 
 </body>
 </html>
+
